@@ -19,6 +19,7 @@ var output;
 var stderr;
 var toShow;
 var error;
+var onError;
 final String runBaseUrl = "https://run.glot.io/languages/";
 int pos = 0;
 
@@ -28,6 +29,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  
+  isError(){
+     if(onError.length > 1)
+       return true;
+     else
+       return false;
+  }
+  
   String getExtension(selectedLang) {
     if (selectedLang == 'python') {
       return "py";
@@ -190,16 +199,6 @@ class _HomeState extends State<Home> {
     'lua',
     'mercury',
     'nim',
-    'ocaml',
-    'perl',
-    'perl6',
-    'php',
-    'python',
-    'ruby',
-    'rust',
-    'scala',
-    'swift',
-    'typescript'
   ];
   void getFile() async {
     filePath = await FilePicker.getFilePath(type: FileType.any);
@@ -232,6 +231,8 @@ class _HomeState extends State<Home> {
               icon: Icon(
                 Icons.arrow_drop_down,
                 color: Colors.grey,
+                size: 20,
+                animation: _animationController
               ),
               dropdownColor: Colors.blueGrey[900],
               value: defaultLangValue == "c" ? 'c' : defaultLangValue,
